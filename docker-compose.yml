@@ -4,7 +4,7 @@ networks:
     name: "mattermost-apps-dev"
 services:
   mattermost:
-    container_name: mattermost
+    container_name: llmui-mattermost
     image: "mattermost/mattermost-enterprise-edition:7.9.0"
     restart: "unless-stopped"
     depends_on:
@@ -28,9 +28,12 @@ services:
       MM_SERVICESETTINGS_ENABLEONBOARDINGFLOW: "false"
       MM_NATIVEAPPSETTINGS_APPDOWNLOADLINK: ""
   db:
+    container_name: llmui-postgres
     image: "postgres"
     restart: "unless-stopped"
     environment:
       POSTGRES_PASSWORD: "mostest"
       POSTGRES_USER: "mmuser"
       POSTGRES_DB: "mattermost_test"
+    volumes:
+      - ./postgres-db-data:/var/lib/postgresql/data
